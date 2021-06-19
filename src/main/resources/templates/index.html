@@ -11,7 +11,7 @@
 <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="ru" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
 <head>
-  <title>Тут название страницы написать</title>
+  <title>Book Shop</title>
   <meta name="description" content="Описание страницы">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -110,7 +110,7 @@
                       <div class="Card-description" th:text="${book.author}">Кондратенко Валерий Петрович
                       </div>
                       <div class="Card-cost"><span class="Card-priceOld" th:text="${book.priceOld}">₽300.00</span>
-                        <span class="Card-price" th:text="book.price">₽190.00</span>
+                        <span class="Card-price" th:text="${book.price}">₽190.00</span>
                       </div>
                     </div>
                   </div>

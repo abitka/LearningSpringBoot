@@ -24,4 +24,4 @@ insert into books (author, title, priceOld, price) values ('Helyn Schneidar', 'u
 insert into books (author, title, priceOld, price) values ('Bette-ann Askem', 'e-enable dot-com supply-chains', '$297.83', '$110.15');
 insert into books (author, title, priceOld, price) values ('Dom Robuchon', 'facilitate efficient eyeballs', '$232.30', '$131.48');
 
--- insert into authors (author) select author from books;
+insert into authors (author) select author from books;
