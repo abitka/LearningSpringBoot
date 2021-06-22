@@ -1,11 +1,15 @@
 package com.example.BookShop.controllers;
 
-import com.example.BookShop.data.AuthorService;
+import com.example.BookShop.dto.Author;
+import com.example.BookShop.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/authors")
@@ -18,9 +22,13 @@ public class AuthorPageController {
         this.authorService = authorService;
     }
 
+    @ModelAttribute("authorsMap")
+    public Map<String, List<Author>> authorsMap() {
+        return authorService.getAuthorsData();
+    }
+
     @GetMapping
-    public String authors(Model model) {
-        model.addAttribute("authorsData", authorService.getAuthorsData());
-        return "./authors/index";
+    public String authors() {
+        return "/authors/index";
     }
 }
