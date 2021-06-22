@@ -13,12 +13,12 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/authors")
-public class AuthorPageController {
+public class AuthorController {
 
     private final AuthorService authorService;
 
     @Autowired
-    public AuthorPageController(AuthorService authorService) {
+    public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
 

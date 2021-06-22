@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/genres")
-public class GenresPageController {
+@RequestMapping("/popular")
+public class PopularController {
 
     @GetMapping
-    public String genres() {
-        return "./genres/index";
+    public String popular() {
+        return "/books/popular";
     }
 }

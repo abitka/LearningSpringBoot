@@ -12,12 +12,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class MainPageController {
+public class MainController {
 
     private final BookService bookService;
 
     @Autowired
-    public MainPageController(BookService bookService) {
+    public MainController(BookService bookService) {
         this.bookService = bookService;
     }
 
