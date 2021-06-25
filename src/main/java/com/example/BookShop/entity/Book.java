@@ -1,11 +1,20 @@
-package com.example.BookShop.dto;
+package com.example.BookShop.entity;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "books")
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Transient
     private String author;
     private String title;
+    @Column(name = "price_old")
     private String priceOld;
     private String price;
+
 
     public Integer getId() {
         return id;
@@ -47,14 +56,4 @@ public class Book {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", author='" + author + '\'' +
-                ", title='" + title + '\'' +
-                ", priceOld='" + priceOld + '\'' +
-                ", price='" + price + '\'' +
-                '}';
-    }
 }

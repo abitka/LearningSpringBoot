@@ -1,6 +1,6 @@
 package com.example.BookShop.controllers;
 
-import com.example.BookShop.dto.Author;
+import com.example.BookShop.entity.Author;
 import com.example.BookShop.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
