@@ -1,33 +1,29 @@
 package com.example.BookShop.config;
 
-import com.example.BookShop.dao.TestEntityDao;
 import com.example.BookShop.entity.TestEntity;
+import com.example.BookShop.repositories.BookRepository;
 import com.example.BookShop.repositories.TestEntityCRUDRepository;
-import org.aspectj.weaver.ast.Test;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import javax.persistence.EntityManagerFactory;
 import java.util.logging.Logger;
 
 @Configuration
 public class CommandLineRunnerImpl  implements CommandLineRunner {
 
     TestEntityCRUDRepository crudRepository;
+    BookRepository bookRepository;
 
     @Autowired
-    public CommandLineRunnerImpl(TestEntityCRUDRepository crudRepository) {
+    public CommandLineRunnerImpl(TestEntityCRUDRepository crudRepository, BookRepository bookRepository) {
         this.crudRepository = crudRepository;
+        this.bookRepository = bookRepository;
     }
-
 
     @Override
     public void run(String... args) throws Exception {
-        for (int i = 0; i < 5; i++) {
+        /*for (int i = 0; i < 5; i++) {
             createTestEntity(new TestEntity());
         }
 
@@ -45,7 +41,13 @@ public class CommandLineRunnerImpl  implements CommandLineRunner {
         else
             throw new NullPointerException();
 
-        deleteTestEntityById(3L);
+        deleteTestEntityById(3L);*/
+
+        Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName())
+                .info("first name\n" + bookRepository.findBooksByAuthor_FirstName("Had").toString());
+
+        Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName())
+                .info("customFindAllBooks\n" + bookRepository.customFindAllBooks().toString());
     }
 
     private void deleteTestEntityById(long id) {
