@@ -1,0 +1,2 @@
+[submodule "src/main/resources/spring-frontend"]
+	url = https://github.com/abitka/LearningSpingBootFrontend.git
