@@ -1,12 +1,10 @@
 package com.example.BookShop.services;
 
-import com.example.BookShop.entity.Author;
+import com.example.BookShop.entity.AuthorEntity;
 import com.example.BookShop.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,8 +19,8 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public Map<String, List<Author>> getAuthorsData() {
+    public Map<String, List<AuthorEntity>> getAuthorsData() {
         return authorRepository.findAll().stream()
-                .collect(Collectors.groupingBy((Author a) -> a.getLastName().substring(0, 1)));
+                .collect(Collectors.groupingBy((AuthorEntity a) -> a.getName().substring(0, 1)));
     }
 }
