@@ -606,3 +606,33 @@ databaseChangeLog:
                   name: reg_time
                   type: TIMESTAMP WITHOUT TIME ZONE
             tableName: users
+  - changeSet:
+      id: 1625228602100-19
+      author: abitka (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: author_id
+            baseTableName: book2author
+            constraintName: author_id_fk
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: author
+            validate: true
+  - changeSet:
+      id: 1625228602100-20
+      author: abitka (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: book_id
+            baseTableName: book2author
+            constraintName: book_id_fk
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: book
+            validate: true
