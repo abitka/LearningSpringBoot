@@ -274,6 +274,11 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
+                  name: slug
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
                   name: price
                   type: INTEGER
               - column:

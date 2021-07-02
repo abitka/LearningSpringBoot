@@ -1,7 +1,12 @@
 package com.example.BookShop.entity.book;
 
+import com.example.BookShop.entity.book.links.Book2AuthorEntity;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -17,6 +22,9 @@ public class BookEntity {
     private short isBestseller;
 
     @Column(nullable = false)
+    private String slug;
+
+    @Column(nullable = false)
     private String title;
 
     private String image;
@@ -29,6 +37,9 @@ public class BookEntity {
 
     @Column(nullable = false)
     private short discount;
+
+    @OneToMany(mappedBy = "bookId")
+    private List<Book2AuthorEntity> bookIdList = new ArrayList<>();
 
 
     public int getId() {
@@ -53,6 +64,14 @@ public class BookEntity {
 
     public void setIsBestseller(short isBestseller) {
         this.isBestseller = isBestseller;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public String getTitle() {
@@ -93,5 +112,13 @@ public class BookEntity {
 
     public void setDiscount(short discount) {
         this.discount = discount;
+    }
+
+    public List<Book2AuthorEntity> getBookIdList() {
+        return bookIdList;
+    }
+
+    public void setBookIdList(List<Book2AuthorEntity> bookIdList) {
+        this.bookIdList = bookIdList;
     }
 }
