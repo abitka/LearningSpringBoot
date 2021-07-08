@@ -20,4 +20,31 @@ public class BookService {
     public List<BookEntity> getBooksData() {
         return bookRepository.findAll();
     }
+
+    //new books service methods
+
+    public List<BookEntity> getBookByAuthor(String authorName) {
+        return bookRepository.findBookEntityByBookIdListContaining(authorName);
+    }
+
+    public List<BookEntity> getBookByTitle(String bookTitle) {
+        return bookRepository.findBookEntityByTitleContaining(bookTitle);
+    }
+
+    public List<BookEntity> getBookByPriceBetween(int min, int max) {
+        return bookRepository.findBookEntityByPriceBetween(min, max);
+    }
+
+    public List<BookEntity> getBookByPriceIs(int price) {
+        return bookRepository.findBookEntityByPriceIs(price);
+    }
+
+    public List<BookEntity> getBestsellers() {
+        return bookRepository.getBestsellers();
+    }
+
+    public List<BookEntity> getBookWithMaxPrice() {
+        return bookRepository.getBookWithMaxPrice();
+    }
+
 }

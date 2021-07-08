@@ -12,4 +12,23 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
     @Query("from BookEntity")
     List<BookEntity> customFindAllBooks();
+
+    //new book rest repository commands
+
+    List<BookEntity> findBookEntityByBookIdListContaining(String authorName);
+
+    List<BookEntity> findBookEntityByTitleContaining(String bookTitle);
+
+    List<BookEntity> findBookEntityByPriceBetween(int discount, int discount2);
+
+    List<BookEntity> findBookEntityByPriceIs(int price);
+
+    @Query("FROM BookEntity WHERE isBestseller=1")
+    List<BookEntity> getBestsellers();
+
+    @Query(value = "SELECT * FROM book WHERE price = (SELECT MAX(price) FROM book)",
+            nativeQuery = true)
+    List<BookEntity> getBookWithMaxPrice();
+
+
 }
