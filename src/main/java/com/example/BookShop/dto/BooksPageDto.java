@@ -4,15 +4,15 @@ import com.example.BookShop.entity.book.BookEntity;
 
 import java.util.List;
 
-public class RecommendedBooksDto {
+public class BooksPageDto {
 
     private int count;
     private List<BookEntity> books;
 
-    public RecommendedBooksDto() {
+    public BooksPageDto() {
     }
 
-    public RecommendedBooksDto(List<BookEntity> books) {
+    public BooksPageDto(List<BookEntity> books) {
         this.books = books;
         this.count = books.size();
     }

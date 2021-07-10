@@ -135,4 +135,15 @@ public class BookEntity {
     public void setBookIdList(List<Book2AuthorEntity> bookIdList) {
         this.bookIdList = bookIdList;
     }
+
+    @Override
+    public String toString() {
+        return "BookEntity{" +
+                "id=" + id +
+                ", isBestseller=" + isBestseller +
+                ", title='" + title + '\'' +
+                ", price=" + price +
+                ", discount=" + discount +
+                '}';
+    }
 }
