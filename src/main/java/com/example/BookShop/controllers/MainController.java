@@ -1,8 +1,10 @@
 package com.example.BookShop.controllers;
 
+import com.example.BookShop.dto.BookDto;
 import com.example.BookShop.dto.BooksPageDto;
 import com.example.BookShop.dto.SearchWordDto;
 import com.example.BookShop.entity.book.BookEntity;
+import com.example.BookShop.mappers.BookMapper;
 import com.example.BookShop.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +19,12 @@ import java.util.List;
 public class MainController {
 
     private final BookService bookService;
+    private final BookMapper bookMapper;
 
     @Autowired
-    public MainController(BookService bookService) {
+    public MainController(BookService bookService, BookMapper bookMapper) {
         this.bookService = bookService;
+        this.bookMapper = bookMapper;
     }
 
     @ModelAttribute("recommendedBooks")
@@ -31,7 +35,9 @@ public class MainController {
     @GetMapping("/books/recommended")
     @ResponseBody
     public BooksPageDto getBooksPage(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
+        List<BookDto> bookDtoList = new ArrayList<>();
+        bookMapper.bookDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent(), bookDtoList);
+        return new BooksPageDto(bookDtoList);
     }
 
     @GetMapping
@@ -65,6 +71,8 @@ public class MainController {
                                           @RequestParam("limit") int limit,
                                           @PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto) {
 
-        return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
+        List<BookDto> bookDtoList = new ArrayList<>();
+        bookMapper.bookDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent(), bookDtoList);
+        return new BooksPageDto(bookDtoList);
     }
 }
