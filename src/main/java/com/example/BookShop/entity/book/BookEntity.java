@@ -1,6 +1,7 @@
 package com.example.BookShop.entity.book;
 
 import com.example.BookShop.entity.book.links.Book2AuthorEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class BookEntity {
     private short discount;
 
     @OneToMany(mappedBy = "bookId")
+    @JsonIgnore
     private List<Book2AuthorEntity> bookIdList = new ArrayList<>();
 
 
