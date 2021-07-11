@@ -25,7 +25,7 @@ public class MainController {
 
     @ModelAttribute("recommendedBooks")
     public List<BookEntity> recommendedBooks() {
-        return bookService.getPageOfRecommendedBooks(0, 5).getContent();
+        return bookService.getPageOfRecommendedBooks(0, 6).getContent();
     }
 
     @GetMapping("/books/recommended")
