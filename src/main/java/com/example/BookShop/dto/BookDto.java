@@ -1,6 +1,5 @@
 package com.example.BookShop.dto;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 public class BookDto {
@@ -22,6 +21,8 @@ public class BookDto {
     private int price;
 
     private short discount;
+
+    private String author;
 
 
     public int getId() {
@@ -94,5 +95,13 @@ public class BookDto {
 
     public void setDiscount(short discount) {
         this.discount = discount;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

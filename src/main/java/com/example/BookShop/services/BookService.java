@@ -37,10 +37,24 @@ public class BookService {
         return bookRepository.findByOrderByPubDateDesc(nextPage);
     }
 
-    public Page<BookEntity> getPageOfRecentFromToBooks(Date from, Date to, int offset, int limit) {
+    /**
+     * Популярность книги представляет собой неотрицательное число, которое можно рассчитать по следующей формуле:
+     *
+     * P = B + 0,7 * C + 0,4 * K,
+     *
+     * B — количество пользователей, купивших книгу,
+     * C — количество пользователей, у которых книга находится в корзине, а
+     * K — количество пользователей, у которых книга отложена.*/
+    public Page<BookEntity> getPageOfPopularBooks(int offset, int limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-//        Date date = new SimpleDateFormat("dd-MM-yyyy").parse(from);
-        return bookRepository.findByPubDateBetweenOrderByPubDateDesc(from, to, nextPage);
+        return bookRepository.findByOrderByPubDateDesc(nextPage);
+    }
+
+    public Page<BookEntity> getPageOfRecentFromToBooks(String from, String to, int offset, int limit) throws ParseException {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
+        Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
+        return bookRepository.findByPubDateBetweenOrderByPubDateDesc(dateFrom, dateTo, nextPage);
     }
 
     public Page<BookEntity> getPageOfSearchResultBooks(String searchWord, int offset, int limit) {

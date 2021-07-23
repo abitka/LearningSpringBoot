@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
 
+    private final Logger logger = Logger.getLogger(MainController.class.getSimpleName());
     private final BookService bookService;
     private final BookMapper bookMapper;
 
@@ -34,6 +36,7 @@ public class MainController {
 
     @ModelAttribute("recentBooks")
     public List<BookEntity> recentBooks() {
+        logger.info(">>>>>>> MainController: recentBooks");
         return bookService.getPageOfRecentBooks(0, 6).getContent();
     }
 
@@ -53,6 +56,7 @@ public class MainController {
     @GetMapping("/books/recent")
     @ResponseBody
     public BooksPageDto getRecentBooksPage(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+        logger.info(">>>>>>> MainController: getRecentBooksPage");
         List<BookDto> bookDtoList = new ArrayList<>();
         bookMapper.bookDto(bookService.getPageOfRecentBooks(offset, limit).getContent(), bookDtoList);
         return new BooksPageDto(bookDtoList);

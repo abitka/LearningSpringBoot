@@ -2,10 +2,7 @@ package com.example.BookShop.mappers;
 
 import com.example.BookShop.dto.BookDto;
 import com.example.BookShop.entity.book.BookEntity;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 import java.util.List;
 
