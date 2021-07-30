@@ -1,8 +1,5 @@
 package com.example.BookShop.entity.book.links;
 
-import com.example.BookShop.entity.AuthorEntity;
-import com.example.BookShop.entity.book.BookEntity;
-
 import javax.persistence.*;
 
 @Entity
@@ -13,15 +10,11 @@ public class Book2AuthorEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id", referencedColumnName = "id", columnDefinition = "INT NOT NULL",
-            foreignKey = @ForeignKey(name = "book_id_fk"))
-    private BookEntity bookId;
+    @Column(name = "book_id", columnDefinition = "INT NOT NULL")
+    private Long bookId;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id", referencedColumnName = "id", columnDefinition = "INT NOT NULL",
-            foreignKey = @ForeignKey(name = "author_id_fk"))
-    private AuthorEntity authorId;
+    @Column(name = "author_id", columnDefinition = "INT NOT NULL")
+    private Long authorId;
 
     @Column(name = "sort_index", columnDefinition = "INT NOT NULL  DEFAULT 0")
     private int sortIndex;
@@ -35,19 +28,19 @@ public class Book2AuthorEntity {
         this.id = id;
     }
 
-    public BookEntity getBookId() {
+    public Long getBookId() {
         return bookId;
     }
 
-    public void setBookId(BookEntity bookId) {
+    public void setBookId(Long bookId) {
         this.bookId = bookId;
     }
 
-    public AuthorEntity getAuthorId() {
+    public Long getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(AuthorEntity authorId) {
+    public void setAuthorId(Long authorId) {
         this.authorId = authorId;
     }
 

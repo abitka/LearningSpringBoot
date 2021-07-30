@@ -1,5 +1,6 @@
 package com.example.BookShop.controllers;
 
+import com.example.BookShop.dto.AuthorDto;
 import com.example.BookShop.dto.BookDto;
 import com.example.BookShop.dto.BooksPageDto;
 import com.example.BookShop.dto.SearchWordDto;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -30,26 +32,36 @@ public class MainController {
     }
 
     @ModelAttribute("recommendedBooks")
-    public List<BookEntity> recommendedBooks() {
-        return bookService.getPageOfBooks(0, 6).getContent();
+    public List<BookDto> recommendedBooks() {
+//        return bookService.getPageOfBooks(0, 6).getContent();
+        return bookMapper.bookEntityToBookDto(bookService.getPageOfBooks(0, 6).getContent());
     }
 
     @ModelAttribute("recentBooks")
-    public List<BookEntity> recentBooks() {
+    public List<BookDto> recentBooks() {
         logger.info(">>>>>>> MainController: recentBooks");
-        return bookService.getPageOfRecentBooks(0, 6).getContent();
+//        return bookService.getPageOfRecentBooks(0, 6).getContent();
+        return bookMapper.bookEntityToBookDto(bookService.getPageOfRecentBooks(0, 6).getContent());
     }
 
     @ModelAttribute("popularBooks")
-    public List<BookEntity> popularBooks() {
-        return bookService.getPageOfBooks(0, 6).getContent();
+    public List<BookDto> popularBooks() {
+//        return bookService.getPageOfPopularBooks(0, 6).getContent();
+        return bookMapper.bookEntityToBookDto(bookService.getPageOfPopularBooks(0, 6).getContent());
     }
 
     @GetMapping("/books/recommended")
     @ResponseBody
     public BooksPageDto getRecommendedBooksPage(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        List<BookDto> bookDtoList = new ArrayList<>();
-        bookMapper.bookDto(bookService.getPageOfBooks(offset, limit).getContent(), bookDtoList);
+        logger.info(">>>>>>> MainController: getRecommendedBooksPage");
+        List<BookDto> bookDtoList;
+        List<AuthorDto> authorDtoList;
+
+        List<BookEntity> bookEntityList = bookService.getPageOfBooks(offset, limit).getContent();
+
+
+        bookDtoList = bookMapper.bookEntityToBookDto(bookEntityList);
+
         return new BooksPageDto(bookDtoList);
     }
 
@@ -58,7 +70,8 @@ public class MainController {
     public BooksPageDto getRecentBooksPage(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         logger.info(">>>>>>> MainController: getRecentBooksPage");
         List<BookDto> bookDtoList = new ArrayList<>();
-        bookMapper.bookDto(bookService.getPageOfRecentBooks(offset, limit).getContent(), bookDtoList);
+//        bookMapper.bookDto(bookService.getPageOfRecentBooks(offset, limit).getContent(), bookDtoList);
+        bookDtoList = bookMapper.bookEntityToBookDto(bookService.getPageOfRecentBooks(0, 6).getContent());
         return new BooksPageDto(bookDtoList);
     }
 
@@ -66,13 +79,19 @@ public class MainController {
     @ResponseBody
     public BooksPageDto getPopularBooksPage(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         List<BookDto> bookDtoList = new ArrayList<>();
-        bookMapper.bookDto(bookService.getPageOfBooks(offset, limit).getContent(), bookDtoList);
+//        bookMapper.bookDto(bookService.getPageOfBooks(offset, limit).getContent(), bookDtoList);
+        bookDtoList = bookMapper.bookEntityToBookDto(bookService.getPageOfPopularBooks(0, 6).getContent());
         return new BooksPageDto(bookDtoList);
     }
 
     @GetMapping
     public String mainPage() {
         return "index";
+    }
+
+    @GetMapping("/tags")
+    public String tagPage() {
+        return "tags/index";
     }
 
     @ModelAttribute("searchWordDto")
@@ -85,7 +104,7 @@ public class MainController {
         return new ArrayList<>();
     }
 
-    @GetMapping(value = {"/search", "/search/{searchWord}"})
+    @GetMapping(value = {"/search/{searchWord}"})
     public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto, Model model) {
         if (searchWordDto == null) return "/search/index";
 
@@ -102,7 +121,8 @@ public class MainController {
                                           @PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto) {
 
         List<BookDto> bookDtoList = new ArrayList<>();
-        bookMapper.bookDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent(), bookDtoList);
+//        bookMapper.bookDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent(), bookDtoList);
+        bookDtoList = bookMapper.bookEntityToBookDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
         return new BooksPageDto(bookDtoList);
     }
 }

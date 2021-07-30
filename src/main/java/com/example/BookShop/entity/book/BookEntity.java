@@ -1,11 +1,9 @@
 package com.example.BookShop.entity.book;
 
-import com.example.BookShop.entity.book.links.Book2AuthorEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.BookShop.entity.AuthorEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +12,7 @@ import java.util.List;
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "pub_date", nullable = false)
     private Date pubDate;
@@ -39,15 +37,19 @@ public class BookEntity {
     @Column(nullable = false)
     private short discount;
 
-    @OneToMany(mappedBy = "bookId")
-    private List<Book2AuthorEntity> bookIdList = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "book2author",
+            joinColumns = {@JoinColumn(name = "book_id", foreignKey = @ForeignKey(name = "book_id_fk"))},
+            inverseJoinColumns = { @JoinColumn(name = "author_id", foreignKey = @ForeignKey(name = "author_id_fk"))}
+    )
+    private List<AuthorEntity> authorList = new ArrayList<>();
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -115,11 +117,11 @@ public class BookEntity {
         this.discount = discount;
     }
 
-    public List<Book2AuthorEntity> getBookIdList() {
-        return bookIdList;
+    public List<AuthorEntity> getAuthorList() {
+        return authorList;
     }
 
-    public void setBookIdList(List<Book2AuthorEntity> bookIdList) {
-        this.bookIdList = bookIdList;
+    public void setAuthorList(List<AuthorEntity> authorList) {
+        this.authorList = authorList;
     }
 }

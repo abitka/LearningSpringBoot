@@ -49,7 +49,7 @@ public class PopularController {
     public List<BookDto> popularBooks() throws ParseException {
         logger.info(">>>>>>> PopularController: popularBooks");
         List<BookDto> bookDtoList = new ArrayList<>();
-        bookMapper.bookDto(bookService.getPageOfPopularBooks(0, 20).getContent(), bookDtoList);
+        bookDtoList = bookMapper.bookEntityToBookDto(bookService.getPageOfPopularBooks(0, 20).getContent());
         return bookDtoList;
     }
 }

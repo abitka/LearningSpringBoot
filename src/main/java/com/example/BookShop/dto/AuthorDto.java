@@ -1,32 +1,16 @@
-package com.example.BookShop.entity;
+package com.example.BookShop.dto;
 
-import com.example.BookShop.entity.book.BookEntity;
+public class AuthorDto {
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
-@Table(name = "author")
-public class AuthorEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String photo;
 
-    @Column(nullable = false)
     private String slug;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(columnDefinition = "TEXT")
     private String description;
-
-    @ManyToMany(mappedBy = "authorList")
-    private List<BookEntity> bookList = new ArrayList<>();
 
 
     public Integer getId() {
@@ -67,13 +51,5 @@ public class AuthorEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<BookEntity> getBookList() {
-        return bookList;
-    }
-
-    public void setBookList(List<BookEntity> bookList) {
-        this.bookList = bookList;
     }
 }

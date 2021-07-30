@@ -1,6 +1,9 @@
 package com.example.BookShop.dto;
 
+import com.example.BookShop.entity.AuthorEntity;
+
 import java.util.Date;
+import java.util.List;
 
 public class BookDto {
 
@@ -22,7 +25,7 @@ public class BookDto {
 
     private short discount;
 
-    private String author;
+    private List<AuthorDto> authorList;
 
 
     public int getId() {
@@ -97,11 +100,11 @@ public class BookDto {
         this.discount = discount;
     }
 
-    public String getAuthor() {
-        return author;
+    public List<AuthorDto> getAuthorList() {
+        return authorList;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorList(List<AuthorDto> authorList) {
+        this.authorList = authorList;
     }
 }

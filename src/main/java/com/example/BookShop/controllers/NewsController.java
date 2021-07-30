@@ -44,24 +44,20 @@ public class NewsController {
     }
 
     @ModelAttribute("recentBooks")
-    public List<BookDto> recentBooks() throws ParseException {
+    public BooksPageDto recentBooks() throws ParseException {
         logger.info(">>>>>>> NewsController: recentBooks");
-        List<BookDto> bookDtoList = new ArrayList<>();
-        String from = "29.05.2021";
-        String to = "29.06.2021";
-        bookMapper.bookDto(bookService
-                .getPageOfRecentFromToBooks(from, to, 0, 20).getContent(), bookDtoList);
-        return bookDtoList;
+        List<BookDto> bookDtoList;
+        bookDtoList = bookMapper.bookEntityToBookDto(bookService
+                .getPageOfRecentBooks(0, 20).getContent());
+        return new BooksPageDto(bookDtoList);
     }
 
     @GetMapping
     public String news(Model model) throws ParseException {
         logger.info(">>>>>>> news");
-        List<BookDto> bookDtoList = new ArrayList<>();
-        String from = "29.05.2021";
-        String to = "29.06.2021";
-        bookMapper.bookDto(bookService
-                .getPageOfRecentFromToBooks(from, to, 0, 20).getContent(), bookDtoList);
+        List<BookDto> bookDtoList;
+        bookDtoList = bookMapper.bookEntityToBookDto(bookService
+                .getPageOfRecentBooks(0, 20).getContent());
 
         model.addAttribute("recentBooks", bookDtoList);
         return "/books/recent";
@@ -73,8 +69,8 @@ public class NewsController {
                                            @RequestParam("offset") int offset, @RequestParam("limit") int limit) throws ParseException {
         logger.info(">>>>>>> getRecentBooksPage: from: " + from + " | to: " + to + " || offset: " + offset + " | limit: " + limit);
         List<BookDto> bookDtoList = new ArrayList<>();
-        bookMapper.bookDto(bookService
-                .getPageOfRecentFromToBooks(from, to, offset, limit).getContent(), bookDtoList);
+        bookDtoList = bookMapper.bookEntityToBookDto(bookService
+                .getPageOfRecentFromToBooks(from, to, offset, limit).getContent());
         return new BooksPageDto(bookDtoList);
     }
 }
