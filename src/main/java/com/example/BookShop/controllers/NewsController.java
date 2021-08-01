@@ -68,7 +68,7 @@ public class NewsController {
     public BooksPageDto getRecentBooksDatePage(@RequestParam("from") String from, @RequestParam("to") String to,
                                            @RequestParam("offset") int offset, @RequestParam("limit") int limit) throws ParseException {
         logger.info(">>>>>>> getRecentBooksPage: from: " + from + " | to: " + to + " || offset: " + offset + " | limit: " + limit);
-        List<BookDto> bookDtoList = new ArrayList<>();
+        List<BookDto> bookDtoList;
         bookDtoList = bookMapper.bookEntityToBookDto(bookService
                 .getPageOfRecentFromToBooks(from, to, offset, limit).getContent());
         return new BooksPageDto(bookDtoList);

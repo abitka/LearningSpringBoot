@@ -25,6 +25,8 @@ public class BookDto {
 
     private short discount;
 
+    private Double bookRatingAndPopularity;
+
     private List<AuthorDto> authorList;
 
 
@@ -98,6 +100,14 @@ public class BookDto {
 
     public void setDiscount(short discount) {
         this.discount = discount;
+    }
+
+    public Double getBookRatingAndPopularity() {
+        return bookRatingAndPopularity;
+    }
+
+    public void setBookRatingAndPopularity(Double bookRatingAndPopularity) {
+        this.bookRatingAndPopularity = bookRatingAndPopularity;
     }
 
     public List<AuthorDto> getAuthorList() {

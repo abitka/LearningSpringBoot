@@ -48,8 +48,8 @@ public class PopularController {
     @ModelAttribute("popularBooks")
     public List<BookDto> popularBooks() throws ParseException {
         logger.info(">>>>>>> PopularController: popularBooks");
-        List<BookDto> bookDtoList = new ArrayList<>();
-        bookDtoList = bookMapper.bookEntityToBookDto(bookService.getPageOfPopularBooks(0, 20).getContent());
+        List<BookDto> bookDtoList;
+        bookDtoList = bookMapper.bookEntityToBookDto(bookService.getPageOfBookRatingAndPopularity(0, 20).getContent());
         return bookDtoList;
     }
 }

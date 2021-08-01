@@ -45,6 +45,11 @@ public class BookService {
      * B — количество пользователей, купивших книгу,
      * C — количество пользователей, у которых книга находится в корзине, а
      * K — количество пользователей, у которых книга отложена.*/
+    public Page<BookEntity> getPageOfBookRatingAndPopularity(int offset, int limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findByOrderByBookRatingAndPopularityDesc(nextPage);
+    }
+
     public Page<BookEntity> getPageOfPopularBooks(int offset, int limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.findByOrderByPubDateDesc(nextPage);

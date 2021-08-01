@@ -33,21 +33,18 @@ public class MainController {
 
     @ModelAttribute("recommendedBooks")
     public List<BookDto> recommendedBooks() {
-//        return bookService.getPageOfBooks(0, 6).getContent();
         return bookMapper.bookEntityToBookDto(bookService.getPageOfBooks(0, 6).getContent());
     }
 
     @ModelAttribute("recentBooks")
     public List<BookDto> recentBooks() {
         logger.info(">>>>>>> MainController: recentBooks");
-//        return bookService.getPageOfRecentBooks(0, 6).getContent();
         return bookMapper.bookEntityToBookDto(bookService.getPageOfRecentBooks(0, 6).getContent());
     }
 
     @ModelAttribute("popularBooks")
     public List<BookDto> popularBooks() {
-//        return bookService.getPageOfPopularBooks(0, 6).getContent();
-        return bookMapper.bookEntityToBookDto(bookService.getPageOfPopularBooks(0, 6).getContent());
+        return bookMapper.bookEntityToBookDto(bookService.getPageOfBookRatingAndPopularity(0, 6).getContent());
     }
 
     @GetMapping("/books/recommended")
@@ -55,10 +52,7 @@ public class MainController {
     public BooksPageDto getRecommendedBooksPage(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         logger.info(">>>>>>> MainController: getRecommendedBooksPage");
         List<BookDto> bookDtoList;
-        List<AuthorDto> authorDtoList;
-
         List<BookEntity> bookEntityList = bookService.getPageOfBooks(offset, limit).getContent();
-
 
         bookDtoList = bookMapper.bookEntityToBookDto(bookEntityList);
 
@@ -69,8 +63,7 @@ public class MainController {
     @ResponseBody
     public BooksPageDto getRecentBooksPage(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         logger.info(">>>>>>> MainController: getRecentBooksPage");
-        List<BookDto> bookDtoList = new ArrayList<>();
-//        bookMapper.bookDto(bookService.getPageOfRecentBooks(offset, limit).getContent(), bookDtoList);
+        List<BookDto> bookDtoList;
         bookDtoList = bookMapper.bookEntityToBookDto(bookService.getPageOfRecentBooks(0, 6).getContent());
         return new BooksPageDto(bookDtoList);
     }
@@ -78,20 +71,14 @@ public class MainController {
     @GetMapping("/books/popular")
     @ResponseBody
     public BooksPageDto getPopularBooksPage(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        List<BookDto> bookDtoList = new ArrayList<>();
-//        bookMapper.bookDto(bookService.getPageOfBooks(offset, limit).getContent(), bookDtoList);
-        bookDtoList = bookMapper.bookEntityToBookDto(bookService.getPageOfPopularBooks(0, 6).getContent());
+        List<BookDto> bookDtoList;
+        bookDtoList = bookMapper.bookEntityToBookDto(bookService.getPageOfBookRatingAndPopularity(0, 6).getContent());
         return new BooksPageDto(bookDtoList);
     }
 
     @GetMapping
     public String mainPage() {
         return "index";
-    }
-
-    @GetMapping("/tags")
-    public String tagPage() {
-        return "tags/index";
     }
 
     @ModelAttribute("searchWordDto")

@@ -1,6 +1,7 @@
 package com.example.BookShop.entity.book;
 
 import com.example.BookShop.entity.AuthorEntity;
+import com.example.BookShop.entity.tags.TagEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -37,12 +38,21 @@ public class BookEntity {
     @Column(nullable = false)
     private short discount;
 
+    @Column(name = "book_rating_and_popularity")
+    private Double bookRatingAndPopularity;
+
     @ManyToMany
     @JoinTable(name = "book2author",
             joinColumns = {@JoinColumn(name = "book_id", foreignKey = @ForeignKey(name = "book_id_fk"))},
             inverseJoinColumns = { @JoinColumn(name = "author_id", foreignKey = @ForeignKey(name = "author_id_fk"))}
     )
     private List<AuthorEntity> authorList = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "book2tag",
+            joinColumns = {@JoinColumn(name = "book_id", foreignKey = @ForeignKey(name = "book_id_fk"))},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id", foreignKey = @ForeignKey(name = "tag_id_fk"))})
+    private List<TagEntity> tagList = new ArrayList<>();
 
 
     public Integer getId() {
@@ -117,11 +127,27 @@ public class BookEntity {
         this.discount = discount;
     }
 
+    public Double getBookRatingAndPopularity() {
+        return bookRatingAndPopularity;
+    }
+
+    public void setBookRatingAndPopularity(Double bookRatingAndPopularity) {
+        this.bookRatingAndPopularity = bookRatingAndPopularity;
+    }
+
     public List<AuthorEntity> getAuthorList() {
         return authorList;
     }
 
     public void setAuthorList(List<AuthorEntity> authorList) {
         this.authorList = authorList;
+    }
+
+    public List<TagEntity> getTagEntities() {
+        return tagList;
+    }
+
+    public void setTagEntities(List<TagEntity> tagList) {
+        this.tagList = tagList;
     }
 }
