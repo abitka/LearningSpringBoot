@@ -13,8 +13,9 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
-    @Query("from BookEntity")
-    List<BookEntity> customFindAllBooks();
+    @Query("FROM BookEntity book JOIN Book2TagEntity book2tag ON book.id = book2tag.bookId " +
+            "WHERE book2tag.tagId=:tagId")
+    List<BookEntity> findBookEntityByByTagIdContains(Integer tagId, Pageable nextPage);
 
     Page<BookEntity> findBookEntityByTitleContaining(String bookTitle, Pageable nextPage);
 

@@ -10,11 +10,11 @@ public class Book2TagEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "tag_id")
+    @Column(name = "tag_id", columnDefinition = "INT NOT NULL")
     private Integer tagId;
 
-    @Column(name = "tag_name")
-    private String tagName;
+    @Column(name = "book_id", columnDefinition = "INT NOT NULL")
+    private Long bookId;
 
 
     public Integer getId() {
@@ -33,11 +33,11 @@ public class Book2TagEntity {
         this.tagId = tagId;
     }
 
-    public String getTagName() {
-        return tagName;
+    public Long getBookId() {
+        return bookId;
     }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 }

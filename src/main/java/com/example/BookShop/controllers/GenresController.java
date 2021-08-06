@@ -28,4 +28,9 @@ public class GenresController {
     public String genres() {
         return "/genres/index";
     }
+
+    @GetMapping("/slug")
+    public String genresSlug() {
+        return "/genres/slug";
+    }
 }

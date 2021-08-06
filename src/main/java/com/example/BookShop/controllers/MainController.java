@@ -1,12 +1,10 @@
 package com.example.BookShop.controllers;
 
-import com.example.BookShop.dto.AuthorDto;
-import com.example.BookShop.dto.BookDto;
-import com.example.BookShop.dto.BooksPageDto;
-import com.example.BookShop.dto.SearchWordDto;
+import com.example.BookShop.dto.*;
 import com.example.BookShop.entity.book.BookEntity;
 import com.example.BookShop.mappers.BookMapper;
 import com.example.BookShop.services.BookService;
+import com.example.BookShop.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +22,13 @@ public class MainController {
     private final Logger logger = Logger.getLogger(MainController.class.getSimpleName());
     private final BookService bookService;
     private final BookMapper bookMapper;
+    private final TagService tagService;
 
     @Autowired
-    public MainController(BookService bookService, BookMapper bookMapper) {
+    public MainController(BookService bookService, BookMapper bookMapper, TagService tagService) {
         this.bookService = bookService;
         this.bookMapper = bookMapper;
+        this.tagService = tagService;
     }
 
     @ModelAttribute("recommendedBooks")
@@ -89,6 +89,14 @@ public class MainController {
     @ModelAttribute("searchResults")
     public List<BookEntity> searchResults() {
         return new ArrayList<>();
+    }
+
+    @ModelAttribute("allTag")
+    public List<TagDto> allTag() {
+        logger.info(">>>>>>> allTag");
+        List<TagDto> tagDtoList = tagService.allTagCountTagId();
+        logger.info(">>>>>>> tagDtoList: " + tagDtoList.size());
+        return tagDtoList;
     }
 
     @GetMapping(value = {"/search/{searchWord}"})
