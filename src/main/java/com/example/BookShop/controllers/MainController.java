@@ -39,7 +39,8 @@ public class MainController {
     @ModelAttribute("recentBooks")
     public List<BookDto> recentBooks() {
         logger.info(">>>>>>> MainController: recentBooks");
-        return bookMapper.bookEntityToBookDto(bookService.getPageOfRecentBooks(0, 6).getContent());
+        List<BookDto> bookDtoList = bookMapper.bookEntityToBookDto(bookService.getPageOfRecentBooks(0, 6).getContent());
+        return bookDtoList;
     }
 
     @ModelAttribute("popularBooks")

@@ -1,7 +1,10 @@
 package com.example.BookShop.services;
 
+import com.example.BookShop.dto.BookDto;
 import com.example.BookShop.entity.book.BookEntity;
+import com.example.BookShop.mappers.BookMapper;
 import com.example.BookShop.repositories.BookRepository;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +20,7 @@ import java.util.List;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final BookMapper bookMapper = Mappers.getMapper(BookMapper.class);
 
     @Autowired
     public BookService(BookRepository bookRepository) {
@@ -70,5 +74,9 @@ public class BookService {
     public List<BookEntity> getBookWithTagIdContains(Integer tagId, int offset, int limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.findBookEntityByByTagIdContains(tagId, nextPage);
+    }
+
+    public List<BookDto> getBooksThisAuthor(String slug) {
+        return bookMapper.bookEntityToBookDto(bookRepository.findBookByThisAuthor(slug));
     }
 }
