@@ -54,11 +54,6 @@ public class BookService {
         return bookRepository.findByOrderByBookRatingAndPopularityDesc(nextPage);
     }
 
-    public Page<BookEntity> getPageOfPopularBooks(int offset, int limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.findByOrderByPubDateDesc(nextPage);
-    }
-
     public Page<BookEntity> getPageOfRecentFromToBooks(String from, String to, int offset, int limit) throws ParseException {
         Pageable nextPage = PageRequest.of(offset, limit);
         Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);

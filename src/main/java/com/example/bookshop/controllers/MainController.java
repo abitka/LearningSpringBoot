@@ -5,6 +5,8 @@ import com.example.bookshop.entity.book.BookEntity;
 import com.example.bookshop.mappers.BookMapper;
 import com.example.bookshop.services.BookService;
 import com.example.bookshop.services.TagService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +14,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
 
-    private final Logger logger = Logger.getLogger(MainController.class.getSimpleName());
+    private final Logger logger = LogManager.getLogger(MainController.class);
     private final BookService bookService;
     private final BookMapper bookMapper;
     private final TagService tagService;
@@ -38,8 +39,7 @@ public class MainController {
     @ModelAttribute("recentBooks")
     public List<BookDto> recentBooks() {
         logger.info(">>>>>>> MainController: recentBooks");
-        List<BookDto> bookDtoList = bookMapper.bookEntityToBookDto(bookService.getPageOfRecentBooks(0, 6).getContent());
-        return bookDtoList;
+        return bookMapper.bookEntityToBookDto(bookService.getPageOfRecentBooks(0, 6).getContent());
     }
 
     @ModelAttribute("popularBooks")
@@ -95,7 +95,7 @@ public class MainController {
     public List<TagDto> allTag() {
         logger.info(">>>>>>> allTag");
         List<TagDto> tagDtoList = tagService.allTagCountTagId();
-        logger.info(">>>>>>> tagDtoList: " + tagDtoList.size());
+        logger.info(">>>>>>> tagDtoList: {}", tagDtoList.size());
         return tagDtoList;
     }
 
@@ -115,8 +115,7 @@ public class MainController {
                                           @RequestParam("limit") int limit,
                                           @PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto) {
 
-        List<BookDto> bookDtoList = new ArrayList<>();
-//        bookMapper.bookDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent(), bookDtoList);
+        List<BookDto> bookDtoList;
         bookDtoList = bookMapper.bookEntityToBookDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
         return new BooksPageDto(bookDtoList);
     }

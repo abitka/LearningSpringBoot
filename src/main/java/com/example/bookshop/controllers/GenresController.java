@@ -4,6 +4,8 @@ import com.example.bookshop.dto.GenreDto;
 import com.example.bookshop.dto.SearchWordDto;
 import com.example.bookshop.entity.book.BookEntity;
 import com.example.bookshop.services.GenreService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,13 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/genres")
 public class GenresController {
 
-    private final Logger logger = Logger.getLogger(GenresController.class.getSimpleName());
+    private final Logger logger = LogManager.getLogger(GenresController.class);
     private final GenreService genreService;
 
     @Autowired
@@ -40,7 +41,7 @@ public class GenresController {
     public List<GenreDto> getAllGenres() {
         logger.info(">>>>>>> allGenres");
         List<GenreDto> genreDtoList = genreService.getAllGenres();
-        logger.info(">>>>>>> genreDtoList: " + genreDtoList.size());
+        logger.info(">>>>>>> genreDtoList: {}", genreDtoList.size());
         return genreDtoList;
     }
 

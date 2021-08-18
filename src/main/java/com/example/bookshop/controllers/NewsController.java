@@ -6,6 +6,8 @@ import com.example.bookshop.dto.SearchWordDto;
 import com.example.bookshop.entity.book.BookEntity;
 import com.example.bookshop.mappers.BookMapper;
 import com.example.bookshop.services.BookService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,13 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/news")
 public class NewsController {
 
-    private final Logger logger = Logger.getLogger(NewsController.class.getSimpleName());
+    private final Logger logger = LogManager.getLogger(NewsController.class);
     private final BookService bookService;
     private final BookMapper bookMapper;
 
@@ -41,7 +42,7 @@ public class NewsController {
     }
 
     @ModelAttribute("recentBooks")
-    public BooksPageDto recentBooks() throws ParseException {
+    public BooksPageDto recentBooks() {
         logger.info(">>>>>>> NewsController: recentBooks");
         List<BookDto> bookDtoList;
         bookDtoList = bookMapper.bookEntityToBookDto(bookService
@@ -50,7 +51,7 @@ public class NewsController {
     }
 
     @GetMapping
-    public String news(Model model) throws ParseException {
+    public String news(Model model) {
         logger.info(">>>>>>> news");
         List<BookDto> bookDtoList;
         bookDtoList = bookMapper.bookEntityToBookDto(bookService
@@ -62,9 +63,13 @@ public class NewsController {
 
     @GetMapping("/books/recent")
     @ResponseBody
-    public BooksPageDto getRecentBooksDatePage(@RequestParam("from") String from, @RequestParam("to") String to,
-                                           @RequestParam("offset") int offset, @RequestParam("limit") int limit) throws ParseException {
-        logger.info(">>>>>>> getRecentBooksPage: from: " + from + " | to: " + to + " || offset: " + offset + " | limit: " + limit);
+    public BooksPageDto getRecentBooksDatePage(@RequestParam("from") String from,
+                                               @RequestParam("to") String to,
+                                               @RequestParam("offset") int offset,
+                                               @RequestParam("limit") int limit) throws ParseException {
+
+        logger.info(">>>>>>> getRecentBooksPage: " +
+                        "from: {} | to: {} || offset: {} | limit: {}", from, to, offset, limit);
         List<BookDto> bookDtoList;
         bookDtoList = bookMapper.bookEntityToBookDto(bookService
                 .getPageOfRecentFromToBooks(from, to, offset, limit).getContent());

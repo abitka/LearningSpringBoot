@@ -10,12 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 public class TagService {
 
-    private final Logger logger = Logger.getLogger(TagService.class.getSimpleName());
     private final TagRepository tagRepository;
     private final TagMapper tagMapper = Mappers.getMapper(TagMapper.class);
 
